@@ -27,7 +27,7 @@ export default class Log {
   constructor(instance: Instance) {
     this.instance = instance;
     let stdoutWidth = process.stdout.getWindowSize?.()[0] || 80;
-    let titleString = " YourDash Instance ReSrc Pre-Alpha ";
+    let titleString = " YourDash Instance Pre-Alpha ";
 
     process.stdout.cursorTo?.(0, 0);
     process.stdout.clearScreenDown?.();

@@ -5,6 +5,7 @@
 
 import path from "path";
 import { Instance } from "./main.js";
+import * as fs from "node:fs";
 
 interface IYourDashApplicationConfigV1 {
   id: string;
@@ -66,13 +67,9 @@ class Applications {
   }
 
   async getInstalledApplications(): Promise<string[]> {
-    let query = await this.instance.database.query(
-      "SELECT installed_applications FROM configuration ORDER BY config_version DESC LIMIT 1;",
-    );
+    const installedApplications = await fs.promises.readdir(path.join(process.cwd(), "src/applications"))
 
-    let val: string[] = query.rows[0].installed_applications;
-
-    return val || [];
+    return installedApplications || []
   }
 
   async loadApplication(applicationPath: string): Promise<YourDashApplication | null> {
@@ -80,7 +77,7 @@ class Applications {
     this.instance.log.info("application", `Loading application @ ${applicationPath}.`);
     try {
       // import index.ts at applicationPath
-      let applicationImport = await import("../../applications/" + path.posix.join(applicationPath, "/backend/src/index.ts"));
+      let applicationImport = await import(path.join(process.cwd(), "src/applications", path.posix.join(applicationId, "/backend/src/index.ts")));
       let application = new applicationImport.default();
       application.__internal_initializedPath = path.posix.join("./src/applications/" + applicationPath);
       this.loadedApplications.push(application);

@@ -166,7 +166,7 @@ class Filesystem {
     if (!(await this.doesPathExist(path.join(this.commonPaths.defaultsDirectory(), "userAvatar.png")))) {
       try {
         await fs.cp(
-          path.join(process.cwd(), "src/backend/defaults/userAvatar.png"),
+          path.join(process.cwd(), "defaults/userAvatar.png"),
           path.join(this.commonPaths.defaultsDirectory(), "userAvatar.png"),
         );
         this.instance.log.info("filesystem", `Coppied default asset ${this.instance.log.addEmphasisToString("userAvatar.png")}.`);
@@ -181,7 +181,7 @@ class Filesystem {
     if (!(await this.doesPathExist(path.join(this.commonPaths.systemDirectory(), "loginBackground.avif")))) {
       try {
         await fs.cp(
-          path.join(process.cwd(), "src/backend/defaults/default_login_background.avif"),
+          path.join(process.cwd(), "defaults/default_login_background.avif"),
           path.join(this.commonPaths.systemDirectory(), "loginBackground.avif"),
         );
         this.instance.log.info("filesystem", `Coppied system asset ${this.instance.log.addEmphasisToString("loginBackground.avif")}.`);
@@ -199,7 +199,7 @@ class Filesystem {
     if (!(await this.doesPathExist(path.join(this.commonPaths.systemDirectory(), "instanceLogo.png")))) {
       try {
         await fs.cp(
-          path.join(process.cwd(), "src/backend/defaults/yourdash.png"),
+          path.join(process.cwd(), "defaults/yourdash.png"),
           path.join(this.commonPaths.systemDirectory(), "instanceLogo.png"),
         );
         this.instance.log.info("filesystem", `Coppied system asset ${this.instance.log.addEmphasisToString("instanceLogo.png")}.`);
@@ -235,7 +235,7 @@ class Filesystem {
     if (!(await this.doesPathExist(path.join(this.instance.filesystem.commonPaths.globalCacheDirectory(), "panel", "invalidIcon.webp")))) {
       try {
         await fs.cp(
-          path.join(process.cwd(), "src/backend/defaults/yourdash.png"),
+          path.join(process.cwd(), "defaults/yourdash.png"),
           path.join(this.instance.filesystem.commonPaths.globalCacheDirectory(), "panel", "invalidIcon.webp"),
         );
         this.instance.log.info("filesystem", `Coppied system asset ${this.instance.log.addEmphasisToString("invalidIcon.webp")}.`);

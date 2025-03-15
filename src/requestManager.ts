@@ -147,7 +147,7 @@ class RequestManager {
       uiConfig: {},
       logo: {
         type: "image/png",
-        content: (await Bun.file(path.join(process.cwd(), "./src/backend/defaults/yourdash.png")).bytes()) as unknown as string,
+        content: (await Bun.file(path.join(process.cwd(), "./defaults/yourdash.png")).bytes()) as unknown as string,
         href: "/swagger",
         target: "_blank",
       },
@@ -159,7 +159,7 @@ class RequestManager {
             rel: "icon",
             sizes: "1024x1024",
             type: "image/png",
-            content: (await Bun.file(path.join(process.cwd(), "./src/backend/defaults/yourdash.png")).bytes()) as unknown as string,
+            content: (await Bun.file(path.join(process.cwd(), "./defaults/yourdash.png")).bytes()) as unknown as string,
           },
         ],
         css: [
@@ -2776,7 +2776,7 @@ class RequestManager {
       await this.app.listen({ port: this.instance.flags.port, host: "0.0.0.0" });
       this.instance.log.info(
         "request_manager",
-        `YourDash ReSrc Instance Backend Online & listening at ${this.instance.log.addEmphasisToString(`port "${this.instance.flags.port}"`)}`,
+        `YourDash Instance Backend Online & listening at ${this.instance.log.addEmphasisToString(`port "${this.instance.flags.port}"`)}`,
       );
 
       this.instance.log.info("request_manager", `Attempting to ping self`);

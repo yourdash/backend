@@ -16,14 +16,12 @@ import ResourceManager from "./resourceManager.js";
 import { InstanceStatus } from "./types/instanceStatus.js";
 import User, { createUser, repairUser } from "./user.js";
 import path from "path";
-import fs from "fs";
 import timeTaken from "./timer.js";
 
 dotenv.config();
 
 class Instance {
   flags!: {
-    isDebugMode: boolean;
     logQueryParameters: boolean;
     logOptionsRequests: boolean;
     isDevMode: boolean;
@@ -55,15 +53,14 @@ class Instance {
   async __internal_init() {
     // FLAGS FOR DEVELOPMENT FEATURES
     this.flags = {
-      isDebugMode: process.env.IS_DEBUGMODE === "true" || false,
       logOptionsRequests: process.env.LOG_OPTIONS_REQUESTS === "true" || false,
       logQueryParameters: process.env.LOG_QUERY_PARAMETERS === "true" || false,
-      isDevMode: process.env.IS_DEVMODE === "true" || false,
+      isDevMode: process.env.YOURDASH_DEVELOPMENT_MODE === "true" || false,
       port: Number(process.env.PORT) || 3563,
       postgresPassword: process.env.POSTGRES_PASSWORD || "postgres",
       postgresPort: Number(process.env.POSTGRES_PORT) || 5432,
       postgresUser: process.env.POSTGRES_USER || "postgres",
-      postgresDatabase: process.env.POSTGRES_DATABASE || "yourdash",
+      postgresDatabase: process.env.POSTGRES_DATABASE || process.env.YOURDASH_DEVELOPMENT_MODE ? "yourdash-dev" : "yourdash",
       cookieSecret: "this should be a random and unknown string to ensure security",
     };
 
@@ -169,7 +166,6 @@ class Instance {
                                     external_url                text   DEFAULT 'http://localhost:3563',
                                     description                 text   DEFAULT 'This is the default instance description. Hey Admin, this can be changed in the system settings!.',
                                     administrator_contact_email text,
-                                    installed_applications      text[] DEFAULT '{ "uk-ewsgit-dash", "uk-ewsgit-files", "uk-ewsgit-photos", "uk-ewsgit-weather", "uk-ewsgit-store", "uk-ewsgit-settings" }',
                                     default_pinned_applications text[] DEFAULT '{ "uk-ewsgit-dash", "uk-ewsgit-files", "uk-ewsgit-store", "uk-ewsgit-weather" }'
                                   )`);
         this.log.info("database", `Table ${this.log.addEmphasisToString("configuration")} has been created as it did not already exist.`);
@@ -337,7 +333,7 @@ import loadable from "@loadable/component";
         "webp",
       );
 
-      this.log.info("instance", `Genertated instanceLogo @ ${dimension}.`);
+      this.log.info("instance", `Generated instanceLogo @ ${dimension}.`);
     }
   }
 }
@@ -347,29 +343,3 @@ export { type Instance };
 const instance = new Instance();
 
 export default instance;
-
-/*
- * https://fastify-vite.dev/guide/getting-started
- *
- * https://github.com/fastify/fastify-schedule
- *
- * https://github.com/fastify/session
- *
- * https://github.com/fastify/fastify-websocket
- *
- * https://github.com/turkerdev/fastify-type-provider-zod
- *
- * https://github.com/fastify/fastify-cors
- *
- * https://github.com/fastify/fastify-cookie
- *
- * https://github.com/fastify/fastify-express
- *
- * https://node-postgres.com/
- *
- * https://github.com/fastify/fastify-auth
- *
- * https://fastify.dev/docs/latest/Reference/Hooks/#hooks
- *
- * http://localhost:3563/swagger
- */
