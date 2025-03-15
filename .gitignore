@@ -1,6 +1,6 @@
 **/*.js
 **/*.js.map
-/fs/log.log
 .env
 !.env.template
 /node_modules/
+/fs
