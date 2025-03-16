@@ -1,0 +1,19 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Start Backend" type="BunRunConfiguration">
+    <option name="applicationParameters">
+      <list>
+        <option value="--log-requests" />
+        <option value="--dev" />
+        <option value="--load-app=C:\Users\ewsgi\projects\uk-ewsgit-dash" />
+      </list>
+    </option>
+    <option name="program" value="src/main.ts" />
+    <option name="runtimeParameters">
+      <list>
+        <option value="--watch" />
+      </list>
+    </option>
+    <option name="workingDirectory" value="$PROJECT_DIR$/backend" />
+    <method v="2" />
+  </configuration>
+</component>

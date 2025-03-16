@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/backend.iml" filepath="$PROJECT_DIR$/.idea/backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/YourDash Instance.iml" filepath="$PROJECT_DIR$/.idea/YourDash Instance.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../tunnel/.idea/tunnel.iml" filepath="$PROJECT_DIR$/../tunnel/.idea/tunnel.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../uikit/.idea/uikit.iml" filepath="$PROJECT_DIR$/../uikit/.idea/uikit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../uk-ewsgit-dash/.idea/uk-ewsgit-dash.iml" filepath="$PROJECT_DIR$/../uk-ewsgit-dash/.idea/uk-ewsgit-dash.iml" />
       <module fileurl="file://$PROJECT_DIR$/../web/.idea/web.iml" filepath="$PROJECT_DIR$/../web/.idea/web.iml" />
     </modules>
   </component>
