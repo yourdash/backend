@@ -5,6 +5,8 @@
 
 // Declare common file imports as shared for the Typescript Language Server
 
+/// <reference types="vite/client" />
+
 declare module "*.module.css" {
   const content: { [className: string]: string };
   export default content;

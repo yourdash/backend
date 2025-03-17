@@ -82,7 +82,7 @@ const PanelLayout: React.FC<{
               key={1}
               className={styles.applicationFrame}
             >
-              <Outlet key={1} />
+              <Outlet />
             </div>
           </div>
         </div>
@@ -118,7 +118,7 @@ const PanelLayout: React.FC<{
               key={1}
               className={styles.applicationFrame}
             >
-              <Outlet key={1} />
+              <Outlet />
             </div>
           </div>
         </div>
@@ -150,7 +150,7 @@ const PanelLayout: React.FC<{
               key={1}
               className={styles.applicationFrame}
             >
-              <Outlet key={1} />
+              <Outlet />
             </div>
           </div>
           <Panel
@@ -186,7 +186,7 @@ const PanelLayout: React.FC<{
               key={1}
               className={styles.applicationFrame}
             >
-              <Outlet key={1} />
+              <Outlet />
             </div>
           </div>
           <Panel

@@ -7,19 +7,19 @@ import React from "react";
 
 const ApplicationPanelContext = React.createContext({
   setApplicationDisplayName: () => {
-    console.error("How did we get here?");
+    console.warn("PanelContext does not exist!");
   },
   setOnBackButton: () => {
-    console.error("How did we get here?");
+    console.warn("PanelContext does not exist!");
   },
   setControls: () => {
-    console.error("How did we get here?");
+    console.warn("PanelContext does not exist!");
   },
   setApplicationIcon: () => {
-    console.error("How did we get here?");
+    console.warn("PanelContext does not exist!");
   },
   setShowBackButton: () => {
-    console.error("How did we get here?");
+    console.warn("PanelContext does not exist!");
   },
 } as {
   setShowBackButton: (value: boolean) => void;

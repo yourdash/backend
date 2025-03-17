@@ -4,12 +4,12 @@
  */
 
 import { Outlet } from "react-router";
-import PanelLayout from "./panel/PanelLayout.tsx";
-import React, { useState } from "react";
+import PanelLayout from "./panel/PanelLayout.jsx";
+import { FC, useState } from "react";
 import styles from "./AppLayout.module.scss";
-import ApplicationPanelContext from "@yourdash/web/src/lib/panelContext.ts";
+import ApplicationPanelContext from "@yourdash/web/src/lib/panelContext.js";
 
-const AppLayout: React.FC = () => {
+const AppLayout: FC = () => {
   const isStandalone = new URLSearchParams(window.location.search).has("standalone");
 
   const [applicationDisplayName, setApplicationDisplayName] = useState<string>("");
@@ -17,9 +17,6 @@ const AppLayout: React.FC = () => {
   const [controls, setControls] = useState<React.ReactNode>(<></>);
   const [onBackButton, setOnBackButton] = useState<() => void>(() => {});
   const [showBackButton, setShowBackButton] = useState<boolean>(false);
-
-  // FIXME: remove after application loading has been resolved @ewsgit
-  return <Outlet />;
 
   // Standalone mode displays only the application and not the Panel
   if (isStandalone) {
