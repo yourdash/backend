@@ -10,8 +10,10 @@ import { fastifyRequestContext, requestContext } from "@fastify/request-context"
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUI from "@fastify/swagger-ui";
 import chalk from "chalk";
-import Fastify, { FastifyError, FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { jsonSchemaTransform, serializerCompiler, validatorCompiler, ZodTypeProvider } from "fastify-type-provider-zod";
+import Fastify from "fastify";
+import type { FastifyError, FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { jsonSchemaTransform, serializerCompiler, validatorCompiler } from "fastify-type-provider-zod";
+import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import { createReadStream } from "fs";
 import { mkdir } from "fs/promises";
 import path from "path";
@@ -2610,13 +2612,13 @@ class RequestManager {
       },
       async (req, res) => {
         const username = this.getRequestUsername();
-        const query = await this.instance.database.query("SELECT pinned_applications FROM panel_configuration WHERE username = $1", [
+        const query = await this.instance.database.query("SELECT pinned_applications FROM public.panel_configuration WHERE username = $1", [
           username,
         ]);
 
         const pinnedApplications: YourDashApplication[] = query.rows[0].pinned_applications.map((a: string) =>
           this.instance.applications.loadedApplications.find((i) => i.__internal_params.id === a),
-        );
+        ).filter((a: YourDashApplication | undefined) => a !== undefined)
 
         return pinnedApplications.map((app) => {
           if (app.__internal_params.frontend) {
@@ -2673,7 +2675,7 @@ class RequestManager {
       });
 
       await resizeImage(
-        path.join(app?.__internal_initializedPath, "./icon.avif"),
+        path.join(app?.__internal_initializedPath, "./assets/icon.png"),
         88,
         88,
         path.join(
@@ -2718,7 +2720,7 @@ class RequestManager {
         if (this.instance.applications.loadedApplications.find((i) => i.__internal_params.id === applicationId)) {
           try {
             const previousPins = await this.instance.database.query(
-              "SELECT pinned_applications FROM panel_configuration WHERE username = $1;",
+              "SELECT pinned_applications FROM public.panel_configuration WHERE username = $1;",
               [username],
             );
 
@@ -2728,7 +2730,7 @@ class RequestManager {
 
             const newPins = [...previousPins.rows[0].pinned_applications, applicationId];
 
-            await this.instance.database.query("UPDATE panel_configuration SET pinned_applications = $2 WHERE username = $1;", [
+            await this.instance.database.query("UPDATE public.panel_configuration SET pinned_applications = $2 WHERE username = $1;", [
               username,
               newPins,
             ]);
@@ -2755,7 +2757,7 @@ class RequestManager {
       async (req, res) => {
         const username = this.getRequestUsername();
 
-        const dbquery = await this.instance.database.query("SELECT widgets, size FROM panel_configuration WHERE username = $1;", [
+        const dbquery = await this.instance.database.query("SELECT widgets, size FROM public.panel_configuration WHERE username = $1;", [
           username,
         ]);
 

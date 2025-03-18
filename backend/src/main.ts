@@ -32,7 +32,8 @@ class Instance {
     postgresUser: string;
     postgresDatabase: string;
     cookieSecret: string;
-    loadDevelopmentApplications: string[]
+    loadDevelopmentApplications: string[];
+    linkDevelopmentApplications: boolean;
   };
   arguments: minimist.ParsedArgs;
   log!: Log;
@@ -78,7 +79,8 @@ class Instance {
       postgresUser: "postgres",
       postgresDatabase: "yourdash", // FIXME: actually use a secure string
       cookieSecret: "this should be a random and unknown string to ensure security",
-      loadDevelopmentApplications: []
+      loadDevelopmentApplications: [],
+      linkDevelopmentApplications: false
     }
 
     this.log = new Log(this);
@@ -105,6 +107,10 @@ class Instance {
       this.log.info(
           "startup", `Starting instance with development application(s): ${this.log.addEmphasisToString(
               `'${appPaths.join("','")}'`)}`)
+    }
+
+    if (this.arguments["link-applications"]) {
+      this.flags.linkDevelopmentApplications = true
     }
 
     try {
@@ -333,7 +339,7 @@ import loadable from "@loadable/component";
 
       for (const [ index, application ] of this.applications.loadedApplications.entries()) {
         loadableRegionReplacement += `const Application${index}=loadable(()=>import("${path.join(
-            path.relative(path.join(process.cwd(), "../src/web"), application.__internal_initializedPath),
+            path.resolve(path.join(process.cwd(), "../src/web"), application.__internal_initializedPath),
             "./web/src/index.tsx"
         ).replaceAll(path.sep, path.posix.sep)}"));`;
         routeRegionReplacement += `<Route path={"${application.__internal_params.id}/*"} element={<Application${index}/>}/>,`;

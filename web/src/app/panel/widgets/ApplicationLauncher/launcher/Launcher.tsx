@@ -79,7 +79,7 @@ const ApplicationLauncher: React.FC<{
             navigate(`/profile/me`);
           }}
         />
-        <span>{"Unknown First Name"}</span>
+        <span className={styles.name}>{"Unknown First Name"}</span>
         <UKIconButton
           accessibleLabel={"Filter small grid"}
           className={"ml-auto"}

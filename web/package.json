@@ -36,6 +36,7 @@
     "@yourdash/backend": "file:../backend",
     "@yourdash/web": "file:.",
     "@yourdash/uikit": "^0.1.4",
+    "@yourdash/tunnel": "^0.1.4",
     "animate.css": "^4.1.1",
     "autoprefixer": "^10.4.20",
     "babel-plugin-react-compiler": "^19.0.0-beta-e552027-20250112",

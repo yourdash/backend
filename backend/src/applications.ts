@@ -12,8 +12,7 @@ interface IYourDashApplicationConfigV1 {
   displayName: string;
   description: string;
   version: {
-    minor: number;
-    major: number;
+    minor: number; major: number;
   };
   credits: {
     authors?: { name: string; site: string }[];
@@ -22,13 +21,12 @@ interface IYourDashApplicationConfigV1 {
     other?: { name: string; site: string }[];
   };
   configVersion: number;
-  frontend?: {
-    entryPoint: string;
-  };
+  frontend?: boolean;
   externalFrontend?: {
     url: string;
   };
 }
+
 class YourDashApplication {
   id: string;
   __internal_params: IYourDashApplicationConfigV1;
@@ -77,9 +75,10 @@ class Applications {
     this.instance.log.info("application", `Loading application @ ${applicationPath}.`);
     try {
       // import index.ts at applicationPath
-      let applicationImport = await import(path.posix.join(path.relative(path.join(process.cwd(), "src"), applicationPath), "/backend/src/index.ts"));
+      let applicationImport = await import(path.posix.join(
+          path.relative(path.join(process.cwd(), "src"), applicationPath), "/backend/src/index.ts"));
       let application = new applicationImport.default();
-      application.__internal_initializedPath = path.posix.join(path.relative(path.join(process.cwd(), "src"), applicationPath));
+      application.__internal_initializedPath = path.resolve(path.join(process.cwd(), "src"), path.relative(path.join(process.cwd(), "src"), applicationPath))
       this.loadedApplications.push(application);
       application?.onLoad?.();
       return application;
@@ -91,8 +90,18 @@ class Applications {
   }
 
   async verifyApplication(applicationPath: string) {
-    Bun.spawnSync(["pnpm", "add", process.cwd()], { cwd: path.relative(path.join(process.cwd()), path.join(applicationPath, "backend")), stdout: "inherit", stderr: "inherit" })
-    Bun.spawnSync(["pnpm", "add", path.join(process.cwd(), "../web")], { cwd: path.relative(path.join(process.cwd()), path.join(applicationPath, "web")), stdout: "inherit", stderr: "inherit" })
+    if (this.instance.flags.linkDevelopmentApplications) {
+      Bun.spawnSync([ "pnpm", "add", process.cwd() ], {
+        cwd: path.relative(path.join(process.cwd()), path.join(applicationPath, "backend")),
+        stdout: "inherit",
+        stderr: "inherit"
+      })
+      Bun.spawnSync([ "pnpm", "add", path.join(process.cwd(), "../web") ], {
+        cwd: path.relative(path.join(process.cwd()), path.join(applicationPath, "web")),
+        stdout: "inherit",
+        stderr: "inherit"
+      })
+    }
 
     return this;
   }

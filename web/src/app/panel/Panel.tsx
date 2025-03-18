@@ -24,17 +24,14 @@ const Panel: FC<PanelProps> = ({ side, setLayoutReloadNumber }) => {
       let req = await tun.get("/core/panel", "json", z.object({
                                                                 widgets: z.string().array(),
                                                                 size: z.enum([ "small", "medium", "large" ]),
-                                                              }),);
+                                                              }));
 
       if (!req.data) return;
 
       setPanelSize(req.data.size);
 
       let widg = []
-
-      let widgetsImportRaw = import.meta.glob<{ default: React.FC }>(`./widgets/**/Widget.tsx`, { import: "default" })
-      console.log(widgetsImportRaw);
-
+      let widgetsImportRaw = import.meta.glob<{ default: React.FC }>(`./widgets/**/Widget.tsx`)
       let widgetsImport: {[key: string]: () => Promise<{default: React.ComponentType<any>}>} = {};
 
       Object.keys(widgetsImportRaw).forEach(ent => {
@@ -43,8 +40,10 @@ const Panel: FC<PanelProps> = ({ side, setLayoutReloadNumber }) => {
       })
 
       for (const widget of (req.data.widgets || [])) {
-        if (widgetsImport[widget]) {
-          widg.push(lazy(widgetsImport[widget]))
+        let wid = widgetsImport[widget]?.()
+
+        if (wid) {
+          widg.push(lazy(() => wid))
         } else {
           console.warn(`Missing widget -> ${widget}`)
         }
