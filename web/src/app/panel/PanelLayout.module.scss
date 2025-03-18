@@ -69,12 +69,13 @@
 
   .applicationIcon {
     border-radius: 0;
-    height: 1.5rem;
+    height: 2rem;
+    display: flex;
   }
 
   .applicationDisplayName {
     margin-right: auto;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 700;
   }
 

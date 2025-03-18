@@ -2364,7 +2364,7 @@ class RequestManager {
         recursive: true,
       });
 
-      if (!(await this.instance.filesystem.doesPathExist(path.join(app?.__internal_initializedPath, "./icon.avif")))) {
+      if (!(await this.instance.filesystem.doesPathExist(path.join(app?.__internal_initializedPath, "./assets/icon.png")))) {
         return this.sendFile(
           res,
           path.join(this.instance.filesystem.commonPaths.GlobalCacheDirectory(), "panel", "invalidIcon.webp"),
@@ -2373,7 +2373,7 @@ class RequestManager {
       }
 
       await resizeImage(
-        path.join(app?.__internal_initializedPath, "./icon.avif"),
+        path.join(app?.__internal_initializedPath, "./assets/icon.png"),
         88,
         88,
         path.join(
@@ -2433,7 +2433,7 @@ class RequestManager {
         recursive: true,
       });
 
-      if (!(await this.instance.filesystem.doesPathExist(path.join(app?.__internal_initializedPath, "./icon.avif")))) {
+      if (!(await this.instance.filesystem.doesPathExist(path.join(app?.__internal_initializedPath, "./assets/icon.png")))) {
         return this.sendFile(
           res,
           path.join(this.instance.filesystem.commonPaths.GlobalCacheDirectory(), "panel", "invalidIcon.webp"),
@@ -2442,7 +2442,7 @@ class RequestManager {
       }
 
       await resizeImage(
-        path.join(app?.__internal_initializedPath, "./icon.avif"),
+        path.join(app?.__internal_initializedPath, "./assets/icon.png"),
         88,
         88,
         path.join(
@@ -2502,7 +2502,7 @@ class RequestManager {
         recursive: true,
       });
 
-      if (!(await this.instance.filesystem.doesPathExist(path.join(app?.__internal_initializedPath, "./icon.avif")))) {
+      if (!(await this.instance.filesystem.doesPathExist(path.join(app?.__internal_initializedPath, "./assets/icon.png"),))) {
         return this.sendFile(
           res,
           path.join(this.instance.filesystem.commonPaths.GlobalCacheDirectory(), "panel", "invalidIcon.webp"),
@@ -2511,7 +2511,7 @@ class RequestManager {
       }
 
       await resizeImage(
-        path.join(app?.__internal_initializedPath, "./icon.avif"),
+        path.join(app?.__internal_initializedPath, "./assets/icon.png"),
         88,
         88,
         path.join(
