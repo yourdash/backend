@@ -7,6 +7,7 @@
   cursor: pointer;
   user-select: none;
   width: calc(var(--app-panel-size) - calc(var(--app-panel-padding) * 2)) !important;
+  height: calc(var(--app-panel-size) - calc(var(--app-panel-padding) * 2)) !important;
   aspect-ratio: 1 / 1;
   transition: var(--transition);
 }

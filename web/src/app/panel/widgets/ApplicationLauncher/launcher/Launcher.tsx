@@ -40,6 +40,7 @@ const ApplicationLauncher: React.FC<{
       { return: "data" },
     ) || [];
   const [layout, setLayout] = React.useState<"large-grid" | "small-grid" | "list">("large-grid");
+  const [userFirstName, setUserFirstName] = React.useState<string>("Unknown User")
 
   return (
     <div
@@ -76,10 +77,10 @@ const ApplicationLauncher: React.FC<{
           icon={UKIcons.Person}
           aria-label={"User Profile Settings"}
           onClick={() => {
-            navigate(`/profile/me`);
+            navigate(`/app/a/uk-ewsgit-user/me`);
           }}
         />
-        <span className={styles.name}>{"Unknown First Name"}</span>
+        <span className={styles.name}>{userFirstName}</span>
         <UKIconButton
           accessibleLabel={"Filter small grid"}
           className={"ml-auto"}

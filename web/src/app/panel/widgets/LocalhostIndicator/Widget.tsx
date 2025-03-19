@@ -5,6 +5,7 @@
 
 import UKText from "@yourdash/uikit-embedded/src/components/text/UKText.js";
 import React from "react";
+import styles from "./Widget.module.scss";
 import clippy from "../../../../lib/clippy.js";
 
 const LocalhostIndicator: React.FC<{
@@ -17,11 +18,11 @@ const LocalhostIndicator: React.FC<{
   return (
     <div
       className={clippy(
-        "flex items-center justify-center h-[var(--app-panel-size)] w-[var(--app-panel-size)] -m-[var(--app-panel-padding)]",
-        side === "top" && "ml-auto",
-        side === "bottom" && "ml-auto",
-        side === "left" && "mt-auto",
-        side === "right" && "mt-auto",
+        styles.component,
+        side === "top" && styles.top,
+        side === "bottom" && styles.bottom,
+        side === "left" && styles.left,
+        side === "right" && styles.right,
       )}
     >
       <UKText

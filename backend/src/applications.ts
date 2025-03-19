@@ -67,7 +67,7 @@ class Applications {
   async getInstalledApplications(): Promise<string[]> {
     const installedApplications = await fs.promises.readdir(path.join(process.cwd(), "src/applications"))
 
-    return installedApplications || []
+    return [...installedApplications, ...this.instance.flags.loadDevelopmentApplications]
   }
 
   async loadApplication(applicationPath: string): Promise<YourDashApplication | null> {

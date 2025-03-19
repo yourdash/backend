@@ -280,9 +280,7 @@ class Instance {
 
     this.log.info("application_manager", "Loading applications...");
 
-    const applications = [
-      ...await this.applications.getInstalledApplications(), ...this.flags.loadDevelopmentApplications
-    ];
+    const applications = await this.applications.getInstalledApplications()
     if (applications.length !== 0) {
       this.log.info("application_manager", `loading applications: '${applications.join("', '")}'`);
 

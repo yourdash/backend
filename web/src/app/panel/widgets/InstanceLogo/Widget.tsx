@@ -23,6 +23,7 @@ const InstanceLogoWidget: React.FC<{ panelSize: "small" | "medium" | "large" }> 
       src={toAuthImgUrl(InstancePanelLogos[panelSize])}
       accessibleLabel={"Instance logo"}
       containerClassName={styles.icon}
+      noRounding={true}
       onClick={() => {
         navigate("/app/a/uk-ewsgit-dash");
       }}
