@@ -3,7 +3,7 @@
  * YourDash is licensed under the MIT License. (https://mit.ewsgit.uk)
  */
 
-import { FastifyInstance } from "fastify";
+import type { FastifyInstance } from "fastify";
 import { type Instance } from "./main.js";
 
 export enum YourDashSessionType {
@@ -50,6 +50,7 @@ class Authorization {
 
   private __internal_generateSessionToken(username: string, sessionType: YourDashSessionType) {
     let sessionToken = "";
+
     function generateStringOfLength(length: number) {
       let output = "";
       const characters = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890-/+=_-~#@'!$%^&*(){}[]<>?¬`|\\.,:;";
@@ -57,7 +58,7 @@ class Authorization {
       function getRandomIntInclusive(min: number, max: number) {
         const randomBuffer = new Uint32Array(1);
 
-        self.crypto.getRandomValues(randomBuffer);
+        crypto.getRandomValues(randomBuffer);
 
         let randomNumber = randomBuffer[0] / (0xffffffff + 1);
 
@@ -98,14 +99,14 @@ class Authorization {
 
   // check the sessionToken is valid for the user
   async authorizeUser(username: string, sessionToken: string): Promise<boolean> {
-    let sessionTokens = await this.instance.database.query("SELECT session_tokens FROM users WHERE username = $1", [username]);
+    let sessionTokens = await this.instance.database.query("SELECT session_tokens FROM public.users WHERE username = $1", [username]);
 
     return !!sessionTokens.rows?.[0]?.session_tokens?.includes(sessionToken) || false;
   }
 
   // generate a sessionToken if the username and password are valid, else return null
   async authenticateUser(username: string, password: string, sessionType: YourDashSessionType): Promise<string | null> {
-    let postgresPasswordHash = (await this.instance.database.query("SELECT password_hash FROM users WHERE username = $1;", [username]))
+    let postgresPasswordHash = (await this.instance.database.query("SELECT password_hash FROM public.users WHERE username = $1;", [username]))
       .rows[0].password_hash;
 
     if (!(await Bun.password.verify(password, postgresPasswordHash))) {
@@ -118,7 +119,7 @@ class Authorization {
   async setUserPassword(username: string, password: string) {
     let passwordHash = await Bun.password.hash(password);
 
-    this.instance.database.query("UPDATE users SET password_hash = $1 WHERE username = $2;", [passwordHash, username]);
+    await this.instance.database.query("UPDATE public.users SET password_hash = $1 WHERE username = $2;", [passwordHash, username]);
 
     this.instance.log.info("authorization", `password was changed for user ${username}`);
 

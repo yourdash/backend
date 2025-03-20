@@ -29,6 +29,9 @@ importers:
       '@yourdash/backend':
         specifier: file:../backend
         version: file:../backend(jiti@1.21.7)
+      '@yourdash/tunnel':
+        specifier: ^0.1.4
+        version: 0.1.4(@types/node@20.17.24)(jiti@1.21.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.85.1)(yaml@2.7.0)
       '@yourdash/tunnel-embedded':
         specifier: file:./lib/tunnel-embedded/
         version: file:lib/tunnel-embedded(vite@6.2.2(@types/node@20.17.24)(jiti@1.21.7)(sass@1.85.1)(yaml@2.7.0))
@@ -1083,6 +1086,12 @@ packages:
   '@yourdash/tunnel-embedded@file:lib/tunnel-embedded':
     resolution: {directory: lib/tunnel-embedded, type: directory}
     engines: {node: '>=21.0.0'}
+
+  '@yourdash/tunnel@0.1.4':
+    resolution: {integrity: sha512-Ei37t2SD226DGgDefzcAp3K95jBU2FMk+tcirQa4I203ckA9lWVVT+U4VcmEbRslMusMM6LSzkVwA5fgMXd8kQ==}
+    peerDependencies:
+      react: ^19.0.0
+      react-dom: ^19.0.0
 
   '@yourdash/uikit-embedded@file:lib/uikit-embedded':
     resolution: {directory: lib/uikit-embedded, type: directory}
@@ -4202,6 +4211,31 @@ snapshots:
     transitivePeerDependencies:
       - vite
 
+  '@yourdash/tunnel@0.1.4(@types/node@20.17.24)(jiti@1.21.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.85.1)(yaml@2.7.0)':
+    dependencies:
+      babel-plugin-react-compiler: 19.0.0-beta-e1e972c-20250221
+      glob: 11.0.1
+      npm-run-all: 4.1.5
+      path-browserify: 1.0.1
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+      vite: 6.2.2(@types/node@20.17.24)(jiti@1.21.7)(sass@1.85.1)(yaml@2.7.0)
+      vite-plugin-dynamic-import: 1.6.0
+      vite-plugin-lib-inject-css: 2.2.1(vite@6.2.2(@types/node@20.17.24)(jiti@1.21.7)(sass@1.85.1)(yaml@2.7.0))
+      zod: 3.24.2
+    transitivePeerDependencies:
+      - '@types/node'
+      - jiti
+      - less
+      - lightningcss
+      - sass
+      - sass-embedded
+      - stylus
+      - sugarss
+      - terser
+      - tsx
+      - yaml
+
   '@yourdash/uikit-embedded@file:lib/uikit-embedded': {}
 
   '@yourdash/uikit@0.1.4(@types/node@20.17.24)(jiti@1.21.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.85.1)(yaml@2.7.0)':
@@ -4240,6 +4274,7 @@ snapshots:
       '@vitejs/plugin-react': 4.3.4(vite@6.2.2(@types/node@20.17.24)(jiti@1.21.7)(sass@1.85.1)(yaml@2.7.0))
       '@vitejs/plugin-react-swc': 3.8.0(vite@6.2.2(@types/node@20.17.24)(jiti@1.21.7)(sass@1.85.1)(yaml@2.7.0))
       '@yourdash/backend': file:../backend(jiti@1.21.7)
+      '@yourdash/tunnel': 0.1.4(@types/node@20.17.24)(jiti@1.21.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.85.1)(yaml@2.7.0)
       '@yourdash/tunnel-embedded': file:lib/tunnel-embedded(vite@6.2.2(@types/node@20.17.24)(jiti@1.21.7)(sass@1.85.1)(yaml@2.7.0))
       '@yourdash/uikit': 0.1.4(@types/node@20.17.24)(jiti@1.21.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.85.1)(yaml@2.7.0)
       '@yourdash/uikit-embedded': file:lib/uikit-embedded
