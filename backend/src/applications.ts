@@ -65,20 +65,28 @@ class Applications {
   }
 
   async getInstalledApplications(): Promise<string[]> {
-    const installedApplications = await fs.promises.readdir(path.join(process.cwd(), "src/applications"))
+    let installedApplications = await fs.promises.readdir(path.join(process.cwd(), "src/applications"))
 
-    return [...installedApplications, ...this.instance.flags.loadDevelopmentApplications]
+    installedApplications = installedApplications.filter(a => !a.endsWith(".txt"))
+
+    return [ ...installedApplications, ...this.instance.flags.loadDevelopmentApplications ]
+  }
+
+  getApplicationAbsolutePath(applicationPath: string) {
+    return path.resolve(path.join(process.cwd(), "src/applications", applicationPath))
   }
 
   async loadApplication(applicationPath: string): Promise<YourDashApplication | null> {
-    await this.verifyApplication(applicationPath);
-    this.instance.log.info("application", `Loading application @ ${applicationPath}.`);
     try {
+      if (!await this.verifyApplication(applicationPath)) {
+        return null;
+      }
+
+      this.instance.log.info("application", `Loading application @ ${applicationPath}.`);
       // import index.ts at applicationPath
-      let applicationImport = await import(path.posix.join(
-          path.relative(path.join(process.cwd(), "src"), applicationPath), "/backend/src/index.ts"));
+      let applicationImport = await import(path.posix.join(this.getApplicationAbsolutePath(applicationPath), "/backend/src/index.ts"));
       let application = new applicationImport.default();
-      application.__internal_initializedPath = path.resolve(path.join(process.cwd(), "src"), path.relative(path.join(process.cwd(), "src"), applicationPath))
+      application.__internal_initializedPath = path.resolve(this.getApplicationAbsolutePath(applicationPath))
       this.loadedApplications.push(application);
       application?.onLoad?.();
       return application;
@@ -89,21 +97,30 @@ class Applications {
     }
   }
 
-  async verifyApplication(applicationPath: string) {
+  async verifyApplication(applicationPath: string): Promise<boolean> {
+    // is the path a directory
+    const absoluteApplicationPath = this.getApplicationAbsolutePath(applicationPath)
+    console.log(absoluteApplicationPath)
+    const stat = await fs.promises.lstat(absoluteApplicationPath)
+
+    if (!stat.isDirectory()) {
+      return false
+    }
+
     if (this.instance.flags.linkDevelopmentApplications) {
       Bun.spawnSync([ "pnpm", "add", process.cwd() ], {
-        cwd: path.relative(path.join(process.cwd()), path.join(applicationPath, "backend")),
+        cwd: path.join(absoluteApplicationPath, "backend"),
         stdout: "inherit",
         stderr: "inherit"
       })
       Bun.spawnSync([ "pnpm", "add", path.join(process.cwd(), "../web") ], {
-        cwd: path.relative(path.join(process.cwd()), path.join(applicationPath, "web")),
+        cwd: path.join(absoluteApplicationPath, "web"),
         stdout: "inherit",
         stderr: "inherit"
       })
     }
 
-    return this;
+    return true;
   }
 
   async uninstallApplication(applicationId: string) {

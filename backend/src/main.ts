@@ -258,7 +258,7 @@ class Instance {
     await timeTaken("request_manager_startup", async () => await this.requestManager.__internal_startup());
     await timeTaken("resource_manager_startup", async () => await this.resourceManager.__internal_startup());
     try {
-      await this.database.query(`CREATE TABLE IF NOT EXISTS panel_configuration
+      await this.database.query(`CREATE TABLE IF NOT EXISTS public.panel_configuration
                                  (
                                      config_version      serial primary key,
                                      username            text NOT NULL,
@@ -310,7 +310,7 @@ class Instance {
       await this.authorization.setUserPassword("admin", "password");
     }
 
-    const users = await this.database.query("SELECT username FROM users");
+    const users = await this.database.query("SELECT username FROM public.users");
 
     for (const user of users.rows) {
       await repairUser(user.username);

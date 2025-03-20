@@ -6,4 +6,4 @@ import React from "react";
 import { Route, Routes } from "react-router";
 import loadable from "@loadable/component";
 
-const Application0=loadable(()=>import("C:/Users/ewsgi/projects/uk-ewsgit-dash/web/src/index.tsx"));const AppRouter=[<Route path={"uk-ewsgit-dash/*"} element={<Application0/>}/>,];export default AppRouter
+const Application0=loadable(()=>import("C:/Users/ewsgi/projects/yourdash/uk-ewsgit-dash/web/src/index.tsx"));const AppRouter=[<Route path={"uk-ewsgit-dash/*"} element={<Application0/>}/>,];export default AppRouter
