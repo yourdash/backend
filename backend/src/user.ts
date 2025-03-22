@@ -50,7 +50,7 @@ class User {
     return this;
   }
 
-  async getFullname() {
+  async getFullName() {
     const surname = await this.getSurname();
     const forename = await this.getForename();
 

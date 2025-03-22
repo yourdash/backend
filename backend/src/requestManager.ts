@@ -118,15 +118,15 @@ class RequestManager {
       credentials: true,
     });
 
-    this.app.register(fastifyCookie, {
+    await this.app.register(fastifyCookie, {
       secret: this.instance.flags.cookieSecret,
       hook: "onRequest",
       parseOptions: {}, // options for parsing cookies
     });
 
-    this.app.register(fastifyFormBody);
+    await this.app.register(fastifyFormBody);
 
-    this.app.register(fastifySwagger, {
+    await this.app.register(fastifySwagger, {
       openapi: {
         info: {
           title: "YourDash Backend",
@@ -144,7 +144,7 @@ class RequestManager {
       transform: jsonSchemaTransform,
     });
 
-    this.app.register(fastifySwaggerUI, {
+    await this.app.register(fastifySwaggerUI, {
       routePrefix: "/swagger",
       uiConfig: {},
       logo: {
@@ -167,6 +167,7 @@ class RequestManager {
         css: [
           {
             filename: "theme.css",
+            // #region css
             content: `@charset "UTF-8";
 .swagger-ui html {
   box-sizing: border-box
@@ -1743,7 +1744,6 @@ class RequestManager {
 
  .swagger-ui .opblock.opblock-post {
    border-color: #ffffff;
-   background: #ffffff;
  }
 
  .swagger-ui .opblock.opblock-post .opblock-summary-method {
@@ -1760,7 +1760,6 @@ class RequestManager {
 
  .swagger-ui .opblock.opblock-put {
    border-color: #ffffff;
-   background: #ffffff;
  }
 
  .swagger-ui .opblock.opblock-put .opblock-summary-method {
@@ -1777,7 +1776,6 @@ class RequestManager {
 
  .swagger-ui .opblock.opblock-delete {
    border-color: #ffffff;
-   background: #ffffff;
  }
 
  .swagger-ui .opblock.opblock-delete .opblock-summary-method {
@@ -1794,7 +1792,6 @@ class RequestManager {
 
  .swagger-ui .opblock.opblock-get {
    border-color: #444444;
-   background: #333333;
  }
 
  .swagger-ui .opblock.opblock-get .opblock-summary-method {
@@ -1811,7 +1808,6 @@ class RequestManager {
 
  .swagger-ui .opblock.opblock-patch {
    border-color: #ffffff;
-   background: #444444;
  }
 
  .swagger-ui .opblock.opblock-patch .opblock-summary-method {
@@ -1828,7 +1824,6 @@ class RequestManager {
 
  .swagger-ui .opblock.opblock-head {
    border-color: #ffffff;
-   background: #ffffff;
  }
 
  .swagger-ui .opblock.opblock-head .opblock-summary-method {
@@ -1845,7 +1840,6 @@ class RequestManager {
 
  .swagger-ui .opblock.opblock-options {
    border-color: #ffffff;
-   background: #ffffff;
  }
 
  .swagger-ui .opblock.opblock-options .opblock-summary-method {
@@ -1924,12 +1918,13 @@ class RequestManager {
  .swagger-ui .model-box-control:focus, .swagger-ui .models-control:focus, .swagger-ui .opblock-summary-control:focus {
    outline: none;
  }`,
+            // #endregion css
           },
         ],
       },
     });
 
-    this.app.register(fastifyRequestContext);
+    await this.app.register(fastifyRequestContext);
 
     this.app.addHook("onResponse", async (req, res) => {
       if (res.statusCode.toString()[0] === "4") {

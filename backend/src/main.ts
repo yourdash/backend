@@ -77,7 +77,8 @@ class Instance {
       postgresPassword: "postgres",
       postgresPort: 5432,
       postgresUser: "postgres",
-      postgresDatabase: "yourdash", // FIXME: actually use a secure string
+      postgresDatabase: "yourdash",
+      // FIXME: actually use a secure string
       cookieSecret: "this should be a random and unknown string to ensure security",
       loadDevelopmentApplications: [],
       linkDevelopmentApplications: false
@@ -90,6 +91,7 @@ class Instance {
       this.flags.postgresDatabase = "yourdash_dev"
       this.log.info("startup", `Starting instance in ${this.log.addEmphasisToString("DEVELOPER")} mode`)
     } else {
+      this.log.info("startup", "Checking for updates...")
       Bun.spawnSync([ "git", "pull" ], { cwd: process.cwd(), stdout: "inherit", stderr: "inherit" })
     }
 
@@ -103,13 +105,15 @@ class Instance {
         appPaths = applicationPaths
       }
 
+      appPaths = appPaths.map(p => path.join("../../../", p))
+
       this.flags.loadDevelopmentApplications = appPaths
       this.log.info(
           "startup", `Starting instance with development application(s): ${this.log.addEmphasisToString(
               `'${appPaths.join("','")}'`)}`)
     }
 
-    if (this.arguments["link-applications"]) {
+    if (this.arguments["link-apps"]) {
       this.flags.linkDevelopmentApplications = true
     }
 

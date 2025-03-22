@@ -88,7 +88,7 @@ class Applications {
       let application = new applicationImport.default();
       application.__internal_initializedPath = path.resolve(this.getApplicationAbsolutePath(applicationPath))
       this.loadedApplications.push(application);
-      application?.onLoad?.();
+      await application?.onLoad?.();
       return application;
     } catch (e) {
       console.error(e);
